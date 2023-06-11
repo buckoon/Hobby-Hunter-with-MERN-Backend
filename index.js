@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 // Add CORS middleware and specify the frontend URL and localhost:3001 as options
 const corsOptions = {
-  origin: ["https://hobby-hunter-with-mern-frontend.vercel.app/", "http://localhost:3001"],
+  origin: ["https://hobby-hunter-with-mern-frontend.vercel.app", "http://localhost:3001"],
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
