@@ -29,13 +29,9 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-
-// CORS configuration
 app.use(cors({
-  origin: "https://hobby-hunter.onrender.com", // Replace with your frontend URL
-  optionsSuccessStatus: 200
+  origin: 'https://hobby-hunter.onrender.com' // Replace with your frontend domain or '*' for allowing all domains (not recommended in production)
 }));
-
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
@@ -60,8 +56,6 @@ app.use("/posts", postRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose.set('strictQuery', false); // Add this line
-
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
