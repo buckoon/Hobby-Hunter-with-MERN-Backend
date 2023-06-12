@@ -29,9 +29,21 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({
-  origin: 'https://hobby-hunter.onrender.com' // Replace with your frontend domain or '*' for allowing all domains (not recommended in production)
-}));
+
+const allowedOrigins = ['https://hobby-hunter.onrender.com', 'http://localhost:3000'];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
+
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
