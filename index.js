@@ -30,12 +30,11 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-// Add CORS middleware and specify the frontend URL and localhost:3001 as options
-const corsOptions = {
-  origin: ["https://hobby-hunter.onrender.com", "http://localhost:3001"],
-  optionsSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// CORS configuration
+app.use(cors({
+  origin: "https://hobby-hunter.onrender.com", // Replace with your frontend URL
+  optionsSuccessStatus: 200
+}));
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
@@ -61,6 +60,8 @@ app.use("/posts", postRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
+mongoose.set('strictQuery', false); // Add this line
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
