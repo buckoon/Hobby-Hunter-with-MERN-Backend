@@ -81,3 +81,12 @@ mongoose
     //Post.insertMany(posts);
   })
   .catch((error) => console.log(`${error} did not connect`));
+
+// Serve the static assets and index.html file from the build folder
+const buildPath = path.join(__dirname, "../client/build");
+
+app.use(express.static(buildPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"));
+});
